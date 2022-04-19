@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
     console.log(session)
     return {
       redirect: {
-        destination: '/',
+        destination: `posts/preview/${slug}`,
         permanent: false,
       }
     }
