@@ -8,11 +8,9 @@ describe("SignInButton component", () => {
   it('Renders correctly when user is not authenticated', () => {
     const useSessionMocked = jest.mocked(useSession)
 
-    useSessionMocked.mockReturnValueOnce([null, false])
+    useSessionMocked.mockReturnValueOnce({ data: null, status: "loading" });
 
-    render(
-      <SignInButton />
-    )
+    render(<SignInButton />)
   
     expect(screen.getByText('Sign in with Github')).toBeInTheDocument()
   })
@@ -20,10 +18,13 @@ describe("SignInButton component", () => {
   it('Renders correctly when user is authenticated', () => {
     const useSessionMocked = jest.mocked(useSession)
 
-    useSessionMocked.mockReturnValueOnce([
-      { user: { name: 'John Doe', email: 'john.doe@example.com' }, expires: 'fake-expires' },
-      false
-    ])
+    useSessionMocked.mockReturnValueOnce({
+      data: {
+        user: { name: "John Doe", email: "john.doe@example.com" },
+        expires: "fake-expires",
+      },
+      status: "authenticated",
+    });
 
     render(
       <SignInButton />
